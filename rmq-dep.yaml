@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ysjmq01
+  labels:
+    app: ysjmq01
+spec:
+  selector:
+    matchLabels:
+      app: ysjmq01
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ysjmq01
+    spec:
+      containers:
+      - name: ysjmq01
+        image: rabbitmq
+        ports:
+        - name: ysjmq01-port
+          containerPort: 15672
+        env: 
+         - name: RABBITMQ_DEFAULT_PASS
+           valueFrom:
+             secretKeyRef:
+               name: app-secret
+               key: rmq-pass
+         - name: RABBITMQ_DEFAULT_USER
+           value: "guest"

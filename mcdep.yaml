@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ysjmc
+  labels:
+    app: ysjmc
+spec:
+  selector:
+    matchLabels:
+      app: ysjmc
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ysjmc
+    spec:
+      containers:
+      - name: ysjmc
+        image: memcached
+        ports:
+        - name: ysjmc-port
+          containerPort: 11211

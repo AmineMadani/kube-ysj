@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ysjapp-service
+spec:
+  ports:
+  - port: 80
+    targetPort: ysjapp-port
+    protocol: TCP
+  selector:
+    app: ysjapp
+  type: LoadBalancer

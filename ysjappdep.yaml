@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ysjapp
+  labels: 
+    app: ysjapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ysjapp
+  template:
+    metadata:
+      labels:
+        app: ysjapp
+    spec:
+      containers:
+      - name: ysjapp
+        image: aminemad13/ysjapp
+        ports:
+        - name: ysjapp-port
+          containerPort: 8080
+      initContainers:
+      - name: init-mydb
+        image: busybox
+        command: ['sh', '-c', 'until nslookup ysjdb.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for mydb; sleep 2; done;']
+      - name: init-memcache
+        image: busybox
+        command: ['sh', '-c', 'until nslookup ysjcache01.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for mydb; sleep 2; done;']
