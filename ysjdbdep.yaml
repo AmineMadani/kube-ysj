@@ -17,8 +17,6 @@ spec:
       containers:
       - name: ysjdb 
         image: aminemad13/ysjdb
-        args:
-         - "--ignore-db-dir=lost+found"
         volumeMounts:
         - mountPath: /var/lib/mysql
           name: ysj-db-data
